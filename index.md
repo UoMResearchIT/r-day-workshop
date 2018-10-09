@@ -3,29 +3,24 @@ layout: lesson
 root: .
 ---
 
+This is the website for the Manchester Universties R day "Introduction to the Tidyverse Workshop".   The course material is an abridged and modified version of the [R for Data Analysis](https://uomresearchit.github.io/r-tidyverse-intro/) course that is offered by [Research IT](http://www.itservices.manchester.ac.uk/research/) at the [University of Manchester](https://www.manchester.ac.uk).
 
-This is an abridged and modified version of the Software Carpentry lesson [R for reproducible scientific analysis](http://swcarpentry.github.io/r-novice-gapminder), for the University of Manchester Course [R for data analysis](https://app.manchester.ac.uk/rrdata).  
-
-The original lesson includes tuition on using [git](https://git-scm.com/) for source control. The University offers a separate course on this, which can be booked online at [http://app.manchester.ac.uk/RGIT](http://app.manchester.ac.uk/RGIT) (university logon required).
-
+The full day [R for Data Analysis](https://uomresearchit.github.io/r-tidyverse-intro/) course is itself an abridged and modified version of the Software Carpentry lesson [R for reproducible scientific analysis](http://swcarpentry.github.io/r-novice-gapminder).  
 
 **[The slide deck used in this course can be found here]({{ page.root }}/slides/).**
 
 
-The goal of this lesson is to teach novice programmers to use R for data analysis. R is commonly used in many scientific disciplines for statistical analysis and its array of third-party packages greatly extend its usefulness.  The emphasis of these materials is to give attendees a strong foundation in the fundamentals of R, and to teach good practices for scientific computing.
+The goal of this workshop is to introduce the [tidyverse](https://www.tidyverse.org) to users who are familiar with R.
 
-Note that this workshop will focus on teaching the fundamentals of the
-programming language R for data analysis.  The statistical content is minimal, though learners should know _how_ to find the appropriate functions and packages for a statistical analysis by the end of the course.
+The tidyverse describes itself as:
 
-The course focuses on using the [tidyverse](https://www.tidyverse.org) for data analysis, rather than base R.
-
+> an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. 
 
 
-> ## Prerequisites
+The packages are designed to work well together, are well thought through, and nice to use.  They can make your data analysis process significantly easier and quicker than using base R alone.
+
+> ## Example data 
 >
-> Understand that computers store data and instructions (programs, scripts etc.) in files.
-> Files are organised in directories (folders).
-> Know how to access files not in the working directory by specifying the path.
 > 
 > Download the example data we will use for the lesson from [here.]({{ page.root }}/data/r-novice.zip)
 >

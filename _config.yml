@@ -6,7 +6,7 @@
 carpentry: "swc"
 
 # Overall title for pages.
-title: "Data analysis using R"
+title: "Introduction to the Tidyverse"
 
 # Contact email address.
 email: david.mawdsley@manchester.ac.uk
@@ -15,7 +15,7 @@ email: david.mawdsley@manchester.ac.uk
 #------------------------------------------------------------
 
 # What kind of thing is this ("workshop" or "lesson")?
-kind: "lesson"
+kind: "workshop"
 
 # Magic to make URLs resolve both locally and on GitHub.
 # See https://help.github.com/articles/repository-metadata-on-github-pages/.
