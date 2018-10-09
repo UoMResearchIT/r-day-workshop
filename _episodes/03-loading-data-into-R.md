@@ -1,11 +1,13 @@
 ---
-title: "Loading data into R"
+title: "Getting started with the tidyverse; loading your data"
 teaching: 20
 exercises: 10
 questions:
+- "How do I load the tidyverse?"
 - "How can I read and write tabular data in R?"
-- "What are the basic data types in R?"
 objectives:
+- "To know how to load the main tidyverse packages"
+- "To be able to read csv data into a tibble"
 - "To be aware of the different types of data."
 - "To begin exploring `tibbles`"
 - "To be able to extract parts of a `tibble`"
@@ -19,35 +21,79 @@ source: Rmd
 
 
 
-One of R's most powerful features is its ability to deal with tabular data -
-such as you may already have in a spreadsheet or a CSV file. 
+## Installing Tidyverse
 
-The [course data]({{ page.root }}/data/r-novice.zip) contains a .csv file
-called `feline-data.csv`, which you copied to the `data/` folder when we discussed managing projects in RStudio.
+## Principal packages in the Tidyverse
 
+## Loading the tidyverse
+
+We can load the tidyverse using:
 
 ~~~
-coat,weight,likes_string
-calico,2.1,1
-black,5.0,0
-tabby,3.2,1
+library(tidyverse)
 ~~~
 {: .language-r}
 
 
 
-We can view the contents of the file by selecting it from the "Files" window in RStudio, and selecting "View File".  This will display the contents of the file in a new window in RStudio.  We can see that the variables names are given in the first line of the file, and that the remaining lines contain the data itself.  Each observation is on a separate line, and variables are separated by commas. Note that viewing the file  _doesn't_ make its contents available to R; to do this we need to _import_ the data.
+~~~
+── Attaching packages ────────────────────────────────── tidyverse 1.2.1 ──
+~~~
+{: .output}
 
-We can import the data into R using the `read_csv()` function; this is part of the `readr` package, which is part of the `tidyverse`. 
-
-Let's make a new script for this episode, by choosing the menu options _File_, _New File_, _R Script_.
-
-Although we loaded the tidyverse in the previous episode, we should make our scripts self-contained, so we should include `library(readr)` in the new script.   We could use `library(tidyverse)` to load all of the commonly used packages in the tidyverse.   We then use   the `read_csv()` function to import the data, which we store in the object named `cats`:
 
 
 ~~~
-library(readr)
-cats <- read_csv(file = "data/feline-data.csv")
+✔ ggplot2 3.0.0     ✔ purrr   0.2.5
+✔ tibble  1.4.2     ✔ dplyr   0.7.6
+✔ tidyr   0.8.1     ✔ stringr 1.3.1
+✔ readr   1.1.1     ✔ forcats 0.3.0
+~~~
+{: .output}
+
+
+
+~~~
+── Conflicts ───────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+~~~
+{: .output}
+
+This loads the most commonly used packages in the tidyverse:
+
+* `readr`: for reading data
+* `ggplot2`: for plotting
+* `tibble`: for creating "tibbles"; these are the tidyverse's take on data frames.
+* `dplyr`: for manipulating tibbles (or data frames); creating new variables, calculating summary statistics etc.
+* `tidyr`: for reshaping data (making it from long to wide format, and vice versa)
+* `purrr`: for functional programming.
+* `stringr`: for manipulating strings
+* `forcats`: FOR CATegorical data (factors); this makes it easier to reorder and rename the levels in factor variables.
+
+You can load each package you need for your analysis separately (e.g. `library(readr)`, etc.); most processes will involve almost all of them though, so I tend to load them all in one go.
+
+There are other packages included in the tidyverse, but these have more specialised uses, and so need to be loaded separately. For example the [lubridate](https://lubridate.tidyverse.org/) package makes it easier to work with dates and times.  A full list of all the tidyverse packages can be found [here](https://www.tidyverse.org/packages/).
+
+
+
+
+
+
+## Reading data
+
+In this workshop we'll limit ourselves to using comma separated data.  We'll work with the gapminder data, which is included in [course data]({{ page.root }}/data/r-novice.zip).  
+
+Although standard R has the ability to load csv files, using the `read.csv()` function, we'll use the functions in the readr Tidyverse package to load this data.   
+
+Let's make a new script for this episode, by choosing the menu options _File_, _New File_, _R Script_.  We   should make our scripts self-contained, so we should include `library(tidyverse)` command at the start of the script.  We can read the data contained in the `gapminder-FiveYearData.csv` file to an object called `gapminder` with the following command:
+
+
+
+~~~
+library(tidyverse)
+
+gapminder <- read_csv("./data/gapminder-FiveYearData.csv")
 ~~~
 {: .language-r}
 
@@ -56,9 +102,12 @@ cats <- read_csv(file = "data/feline-data.csv")
 ~~~
 Parsed with column specification:
 cols(
-  coat = col_character(),
-  weight = col_double(),
-  likes_string = col_integer()
+  country = col_character(),
+  year = col_integer(),
+  pop = col_double(),
+  continent = col_character(),
+  lifeExp = col_double(),
+  gdpPercap = col_double()
 )
 ~~~
 {: .output}
@@ -67,28 +116,35 @@ We see that the `read_csv()` table reports a "column specification".  This shows
 
 
 ~~~
-cats
+gapminder
 ~~~
 {: .language-r}
 
 
 
 ~~~
-# A tibble: 3 x 3
-  coat   weight likes_string
-  <chr>   <dbl>        <int>
-1 calico    2.1            1
-2 black     5              0
-3 tabby     3.2            1
+# A tibble: 1,704 x 6
+   country      year      pop continent lifeExp gdpPercap
+   <chr>       <int>    <dbl> <chr>       <dbl>     <dbl>
+ 1 Afghanistan  1952  8425333 Asia         28.8      779.
+ 2 Afghanistan  1957  9240934 Asia         30.3      821.
+ 3 Afghanistan  1962 10267083 Asia         32.0      853.
+ 4 Afghanistan  1967 11537966 Asia         34.0      836.
+ 5 Afghanistan  1972 13079460 Asia         36.1      740.
+ 6 Afghanistan  1977 14880372 Asia         38.4      786.
+ 7 Afghanistan  1982 12881816 Asia         39.9      978.
+ 8 Afghanistan  1987 13867957 Asia         40.8      852.
+ 9 Afghanistan  1992 16317921 Asia         41.7      649.
+10 Afghanistan  1997 22227415 Asia         41.8      635.
+# ... with 1,694 more rows
 ~~~
 {: .output}
-When we enter `cats` by itself on the command line, it will print the contents of `cats`; we see that it consists of a 3 by 3 `tibble`. A tibble is a way of storing tabular data, which is part of the tidyverse.   We see the variable names, and an (abbreviated) string indicating what type of data is stored in each variable.
+When we enter `gapminder` by itself on the command line, it will print the contents of `gapminder``; we see that it consists of a `tibble`. A tibble is a way of storing tabular data, which is part of the tidyverse.   We see the variable names, and an (abbreviated) string indicating what type of data is stored in each variable.
 
 
 > ## read_csv() vs read.csv()
 >
-> You may notice while typing the command that RStudio auto suggests `read.csv()` as a function to load a comma separated 
-> value file.  This function is included as part of base R, and performs a similar job 
+> `read.csv()` is included as part of base R, and performs a similar job 
 > to `read_csv()`.  We will be using `read_csv()` in this course; it is part of the tidyverse,
 > so works well with other parts of the tidyverse, is faster than `read.csv()` and handles 
 > strings in a way that is usually more useful than `read.csv()`
@@ -119,79 +175,30 @@ Every piece of data in R is stored as either `double`, `integer`, `complex`, `lo
 - `character` variables can store strings of characters.
 
 When we read the data into
-R using `read_csv()` it tries to work out what data type each variable is, which it does by looking at the data contained in the first 1000 rows of the data file.   We can see from the displayed message that `read_csv()` has treated the `coat` variable as a character variable, the `weight` variable as a floating point number and `likes_string` as an integer variable.
+R using `read_csv()` it tries to work out what data type each variable is, which it does by looking at the data contained in the first 1000 rows of the data file.   We can see from the displayed message that `read_csv()` has treated the `country` variable as a character variable, the `gdpPercap` variable as a floating point number and `pop` variable as an integer variable.
 
-This is almost correct; `likes_string` is, however a logical (or boolean) value - the cat either likes string (which is represented in the data file as a `1`, or doesn't (represented by `0`)).  We can specify how we would like `read_csv()` to treat the data in each variable using the `col_types` option; let's tell `read_csv()` to treat `likes_string` as a logical variable:
+We can override these guesses using the `col_types` argument to `read_csv()`.  Although `read_csv()` has correctly guessed the correct column types for our file, it is a good idea to explicitly tell it what sort of data to expect in each column.  This way our analysis will be robust to the wrong type of data being stored in a column (or to readr changing the algorithm it uses to guess data types).   
 
-
-~~~
-cats <- read_csv("data/feline-data.csv", col_types = cols(
-  coat = col_character(),
-  weight = col_double(),
-  likes_string = col_logical()
-) )
-~~~
-{: .language-r}
-
-That's a lot of typing!  Fortunately, we don't have to type everything by hand.  The `cols()` function above may look familiar; if we load a file using `read_csv()` without specifying the `col_types` option, it will print out the `cols()` function it has generated during the import process.  We can copy and paste this into our script, and modify it as required.   
-
-If we look at the imported data, we will now see that the `likes_string` variable is recorded as a logical.  The strict approach to specifying data types has another benefit, as we'll see...
-
-A user has added details of another cat. This information is in the file
-`data/feline-data_v2.csv`, included in the course data download.
+`read_csv()` helpfully formats the column specficiation in the format that the `col_types` argument expect, so we can cut and paste this into our command (editing it if we need to override any of the guesses). 
 
 
 ~~~
-file.show("data/feline-data_v2.csv")
+gapminder <- read_csv("./data/gapminder-FiveYearData.csv",
+                      col_types = cols(
+                        country = col_character(),
+                        year = col_integer(),
+                        pop = col_double(),
+                        continent = col_character(),
+                        lifeExp = col_double(),
+                        gdpPercap = col_double()
+                      ))
 ~~~
 {: .language-r}
 
-
-~~~
-coat,weight,likes_string
-calico,2.1,1
-black,5.0,0
-tabby,3.2,1
-tabby,2.3 or 2.4,1
-~~~
-{: .language-r}
-
-Let's load this in, using the `read_csv()` command we have just written:
-
-
-~~~
-cats2 <- read_csv("data/feline-data_v2.csv", col_types = cols(
-  coat = col_character(),
-  weight = col_double(),
-  likes_string = col_logical()
-) )
-~~~
-{: .language-r}
-
-
-
-~~~
-Warning in rbind(names(probs), probs_f): number of columns of result is not
-a multiple of vector length (arg 2)
-~~~
-{: .error}
-
-
-
-~~~
-Warning: 1 parsing failure.
-row # A tibble: 1 x 5 col     row col    expected               actual    file                      expected   <int> <chr>  <chr>                  <chr>     <chr>                     actual 1     4 weight no trailing characters " or 2.4" 'data/feline-data_v2.csv' file # A tibble: 1 x 5
-~~~
-{: .error}
-
-We see that a `parsing failure` message has been printed when we load the data.   If we look at the `cats2` data, we will see that the invalid weight `2.3 or 2.4` has been replaced with an `NA`.  This illustrates one of the benefits of
-specifying the column types when we load the data; it alerts us when something has gone wrong with the data-import. If we hadn't specified the type of data that we expect to be stored in each column, `read_csv()` will read the `weight` variable as a character variable.
-
-We don't *have* to specify a column type for each variable; the `cols()` function will guess the data types for the columns we don't specify.  It is, however, a good idea to be explicit about the type of data we expect to be in each column.
 
 > ## Importing data using RStudio
 > 
-> You may have noticed when we viewed the `feline-data.csv` file in RStudio, before importing it, that another option  appeared, labelled "Import Dataset".  This lets us import the data interactively.   It can be more convenient to use this approach, rather than manually writing the required code.   If you do this, you will find that the code RStudio has written is put into the console and run (and will appear in the history tab in RStudio).  It's fine to do this initially, but *you should copy the generated code to your script, so that you can reproduce your analysis*. 
+> You may have noticed when we viewed the `gapminder-FiveYearData.csv` file in RStudio, before importing it, that another option  appeared, labelled "Import Dataset".  This lets us import the data interactively.   It can be more convenient to use this approach, rather than manually writing the required code.   If you do this, you will find that the code RStudio has written is put into the console and run (and will appear in the history tab in RStudio).  It's fine to do this initially, but *you should copy the generated code to your script, so that you can reproduce your analysis*. 
 {: .callout}
 
 ## Exploring tibbles
@@ -201,16 +208,9 @@ of a variable using the dollar symbol, `$`:
 
 
 ~~~
-cats$weight
+gapminder$pop
 ~~~
 {: .language-r}
-
-
-
-~~~
-[1] 2.1 5.0 3.2
-~~~
-{: .output}
 
 We can also use the subsetting operator `[]` directly on tibbles.  In contrast to a vector, a tibble
 is two dimensional.   We pass two arguments to the `[]` operator; the first indicates the row(s) we 
@@ -218,7 +218,7 @@ require and the second indicates the columns.  So to return rows 1 and 2, and co
 
 
 ~~~
-cats[1:2,2:3]
+gapminder[1:2,2:3]
 ~~~
 {: .language-r}
 
@@ -226,10 +226,10 @@ cats[1:2,2:3]
 
 ~~~
 # A tibble: 2 x 2
-  weight likes_string
-   <dbl> <lgl>       
-1    2.1 TRUE        
-2    5   FALSE       
+   year     pop
+  <int>   <dbl>
+1  1952 8425333
+2  1957 9240934
 ~~~
 {: .output}
 
@@ -237,36 +237,44 @@ If we leave an index blank, this acts as a wildcard and matches all of the rows 
 
 
 ~~~
-cats[1,]
+gapminder[1,]
 ~~~
 {: .language-r}
 
 
 
 ~~~
-# A tibble: 1 x 3
-  coat   weight likes_string
-  <chr>   <dbl> <lgl>       
-1 calico    2.1 TRUE        
+# A tibble: 1 x 6
+  country      year     pop continent lifeExp gdpPercap
+  <chr>       <int>   <dbl> <chr>       <dbl>     <dbl>
+1 Afghanistan  1952 8425333 Asia         28.8      779.
 ~~~
 {: .output}
 
 
 
 ~~~
-cats[,1]
+gapminder[,1]
 ~~~
 {: .language-r}
 
 
 
 ~~~
-# A tibble: 3 x 1
-  coat  
-  <chr> 
-1 calico
-2 black 
-3 tabby 
+# A tibble: 1,704 x 1
+   country    
+   <chr>      
+ 1 Afghanistan
+ 2 Afghanistan
+ 3 Afghanistan
+ 4 Afghanistan
+ 5 Afghanistan
+ 6 Afghanistan
+ 7 Afghanistan
+ 8 Afghanistan
+ 9 Afghanistan
+10 Afghanistan
+# ... with 1,694 more rows
 ~~~
 {: .output}
 
@@ -274,35 +282,10 @@ Subsetting a tibble returns another tibble; using `$` to extract a variable retu
 
 
 ~~~
-cats$coat
+gapminder$country
+gapminder[,1]
 ~~~
 {: .language-r}
-
-
-
-~~~
-[1] "calico" "black"  "tabby" 
-~~~
-{: .output}
-
-
-
-~~~
-cats[,1]
-~~~
-{: .language-r}
-
-
-
-~~~
-# A tibble: 3 x 1
-  coat  
-  <chr> 
-1 calico
-2 black 
-3 tabby 
-~~~
-{: .output}
 
 > ## Tibbles vs data frames
 > 
@@ -315,160 +298,13 @@ cats[,1]
 
 ## Writing data in R
 
-We can save a tibble (or data frame) to a csv file, using `readr`'s `write_csv()` function.  For example, to save the cat data to `mycats.csv`:
+We can save a tibble (or data frame) to a csv file, using `readr`'s `write_csv()` function.  For example, to save the gapminder data to `mygapminder.csv`:
 
 
 ~~~
-write_csv(cats, "data/mycats.csv")
-~~~
-{: .language-r}
-
-
-## Categorical data (self study)
-
-Another data structure is called a `factor`. Factors usually look like
-character data, but are used to represent categorical information.  We don't handle much
-categorical data in this course, so this session is left for self study.
-
-Let's work with the coat colours of the cats in our dataset
-
-
-~~~
-catCoats <- cats$coat
-catCoats
+write_csv(gapminder, "data/mygapminder.csv")
 ~~~
 {: .language-r}
-
-
-
-~~~
-[1] "calico" "black"  "tabby" 
-~~~
-{: .output}
-
-Let's assume that only specific values of coat colour are allowed:
-
-
-~~~
-validCoatColours <- c("white", "black", "calico", "tabby")
-~~~
-{: .language-r}
-
-We can convert our character vector of coat colours into a factor using the `parse_factor()` function:
-
-
-~~~
-coatFactor <- parse_factor(catCoats, levels = validCoatColours)
-coatFactor 
-~~~
-{: .language-r}
-
-
-
-~~~
-[1] calico black  tabby 
-Levels: white black calico tabby
-~~~
-{: .output}
-
-You might be wondering what the point of defining a factor is.  If we're fitting, e.g. a linear regression with
-a categorical variable we would need to generate indicator variables for it.   By defining our data as categorical,
-R will take care of this for us.   The factor levels will be defined in the order we specify in the vector we pass as the `levels` argument to `parse_factor`; so the baseline treatment would usually be specified as the first level.
-
-Defining variables as factors also helps us to ensure data integrity.   Consider the vector below:
-
-
-~~~
-catCoats2 <- c("calic0", "black", "tabby")
-~~~
-{: .language-r}
-
-If we try to convert this to a factor it won't work:
-
-~~~
-parse_factor(catCoats2, levels = validCoatColours)
-~~~
-{: .language-r}
-
-
-
-~~~
-Warning: 1 parsing failure.
-row # A tibble: 1 x 4 col     row   col expected           actual expected   <int> <int> <chr>              <chr>  actual 1     1    NA value in level set calic0
-~~~
-{: .error}
-
-
-
-~~~
-[1] <NA>  black tabby
-attr(,"problems")
-# A tibble: 1 x 4
-    row   col expected           actual
-  <int> <int> <chr>              <chr> 
-1     1    NA value in level set calic0
-Levels: white black calico tabby
-~~~
-{: .output}
-
-Remember that we specified the column types when we loaded the data using `read_csv()`; we can 
-take this idea a step further, and define `coat` as a factor when we load the data.
-
-> ## Challenge 1
->
-> Assume that the valid values for the coats variable are black, white, calico and tabby.
-> Read in the cats data, treating the  `coat` variable as a factor with these levels.
-> 
-> Hint: `col_factor()` and its help page may be useful
->
-> > ## Solution to challenge 1
-> >  
-> > 
-> > ~~~
-> > cats <- read_csv("data/feline-data.csv", col_types = cols(
-> >  coat = col_factor(levels = c("black", "white", "calico",  "tabby")),
-> >  weight = col_double(),
-> >  likes_string = col_logical()
-> > ) )
-> > cats
-> > ~~~
-> > {: .language-r}
-> > 
-> > 
-> > 
-> > ~~~
-> > # A tibble: 3 x 3
-> >   coat   weight likes_string
-> >   <fct>   <dbl> <lgl>       
-> > 1 calico    2.1 TRUE        
-> > 2 black     5   FALSE       
-> > 3 tabby     3.2 TRUE        
-> > ~~~
-> > {: .output}
-> >  You may have noticed while reading the help file for `col_factor()` and `parse_factor()` that we can pass
-> > the option `levels = NULL`.  This will cause R to generate the factor levels automatically.  This can be a bad idea,
-> > since invalid data (such as "calic0" in the example above) will get their own factor level.  If, on the other hand
-> > you've got hundereds of possible values,  that's a lot of typing.  
-> >
-> > A compromise between these two approaches is to look at the levels your factor has having loded the data, using the `levels()` function: e.g. `levels(cats$coat)`.  By testing the length of this vector you can check that you have as many factor levels as you expect.
-> >
-> {: .solution}
-{: .challenge}
-
-> ## Doing more with factors
-> 
-> If you wish to perform more complex operations on factors, such as recoding 
-> level names, changing level order, and collapsing multiple levels into one,
-> the [forcats](http://forcats.tidyverse.org/) package, which is part of the tidyverse
-> makes this easy.  Note that `forcats` isn't loaded by default, so you will
-> need to use `library("forcats")` before using it.
-{: .callout}
-
-## Matrices
-
-We can also define matrices in R.  We don't cover this in this course, since we are focussing
-on data-analysis, rather than maths and algorithms.   For details of the matrix class, you can refer to the [original Software Carpentry version of these notes](http://swcarpentry.github.io/r-novice-gapminder/04-data-structures-part1/#matrices).
-
 
 > ## Differences with base R
 > 
