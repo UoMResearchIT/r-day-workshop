@@ -27,7 +27,13 @@ knitr_fig_path("04-")
 
 ## Installing Tidyverse
 
-## Principal packages in the Tidyverse
+The tidyverse consists of several packages (we discuss the main ones below), which are all on CRAN.  We can install the tidyverse like any other CRAN package, using:
+
+```{r, eval = FALSE}
+install.packages("tidyverse")
+```
+
+The `tidyverse` package acts as a "wrapper", which will install all of the packages that constitute the tidyverse.   If space is at a premium, individual packages from the tidyverse can be installed.  In practice, it's usually easier to install the whole thing.
 
 ## Loading the tidyverse
 
@@ -52,9 +58,11 @@ You can load each package you need for your analysis separately (e.g. `library(r
 There are other packages included in the tidyverse, but these have more specialised uses, and so need to be loaded separately. For example the [lubridate](https://lubridate.tidyverse.org/) package makes it easier to work with dates and times.  A full list of all the tidyverse packages can be found [here](https://www.tidyverse.org/packages/).
 
 
+## Workshop overview
 
+In this workshop we're going to work with some data from the [gapminder project](https://www.gapminder.org/).  The data consists of the population, GDP per capita and average life Expectancy of 142 countries, recorded at five year intervals.
 
-
+We'll start by reading the data into R, using `readr`.  This will give us a `tibble`, which is the tidyverse's (improved) take on a data.frame; we'll briefly look at how to access parts of a tibble. We'll then start analysing the data, using `dplyr`.  We'll end the session using `ggplot2` (which is the tidyverse's plotting package) to explore the data graphically.
 
 ## Reading data
 
