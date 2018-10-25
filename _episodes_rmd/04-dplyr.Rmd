@@ -60,6 +60,14 @@ print(year_country_gdp)
 
 Select will select _columns_ of data.  What if we want to select rows that meet certain criteria?  
 
+## Other ways of selecting
+
+Instead of saying what columns we _do_ want, we can tell R which columns we don't want by prefixing the column name with a `-`.  For example to select everything except year we would use `select(gapminder, -year)`.
+
+There are also other ways of selecting columns based on parts of their names (such as `starts_with()` and `ends_with()`) - see `?select_helpers` for more information.  
+
+{: .callout}
+
 ## Using `filter()`
 
 The `filter()` function is used to select rows of data.  For example, to select only countries in 
