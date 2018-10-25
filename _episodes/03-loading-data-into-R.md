@@ -86,9 +86,15 @@ There are other packages included in the tidyverse, but these have more speciali
 
 ## Workshop overview
 
-In this workshop we're going to work with some data from the [gapminder project](https://www.gapminder.org/).  The data consists of the population, GDP per capita and average life Expectancy of 142 countries, recorded at five year intervals.
+In this workshop we're going to work with some data from the [gapminder project](https://www.gapminder.org/).  The data consists of the population, GDP per capita and average life expectancy of 142 countries, recorded at five year intervals.
 
 We'll start by reading the data into R, using `readr`.  This will give us a `tibble`, which is the tidyverse's (improved) take on a data.frame; we'll briefly look at how to access parts of a tibble. We'll then start analysing the data, using `dplyr`.  We'll end the session using `ggplot2` (which is the tidyverse's plotting package) to explore the data graphically.
+
+## Making a new project
+
+If you're using RStudio, it's a good idea to use its projects feature to organise your work.  Create a new project (File, New Project) for the workshop.  Within this, create directories `data`, `results` and `src`, for our input data, analysis results, and analysis scripts respectively.
+
+Uncompress the [course data]({{ page.root }}/data/r-novice.zip) to the `data` directory.  
 
 ## Reading data
 
