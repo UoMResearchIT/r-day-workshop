@@ -96,6 +96,10 @@ If you're using RStudio, it's a good idea to use its projects feature to organis
 
 Uncompress the [course data]({{ page.root }}/data/r-novice.zip) to the `data` directory.  
 
+Make sure that your working directory is the project directory.  You can see your current working directory above your console window in RStudio, or by typing `getwd()` a the console.
+
+The easiest way to set the working directory is to navigate to the project directory in the files tab, and then select "more", "set as working directory".  You can also use the `setwd()` command, if you prefer.  
+
 ## Reading data
 
 In this workshop we'll limit ourselves to using comma separated data.  We'll work with the gapminder data, which is included in [course data]({{ page.root }}/data/r-novice.zip).  
@@ -155,7 +159,7 @@ gapminder
 # ... with 1,694 more rows
 ~~~
 {: .output}
-When we enter `gapminder` by itself on the command line, it will print the contents of `gapminder``; we see that it consists of a `tibble`. A tibble is a way of storing tabular data, which is part of the tidyverse.   We see the variable names, and an (abbreviated) string indicating what type of data is stored in each variable.
+When we enter `gapminder` by itself on the command line, it will print the contents of `gapminder`; we see that it consists of a tibble. A tibble is a way of storing tabular data, which is part of the tidyverse.   We see the variable names, and an (abbreviated) string indicating what type of data is stored in each variable.
 
 
 > ## read_csv() vs read.csv()
@@ -309,7 +313,7 @@ gapminder[,1]
 > uses data frames to represent tabular data. One of the differences between these 
 > two types of obbject is *what* is returned when you extract a subset of rows/columns.
 > In contrast to a tibble, taking a subset of a data frame doesn't always return
-> another data frame. For more details see the callout at the end of this episode.
+> another data frame. For more details see the callout at the end of this episode, or take a look at the tibble vignette in R with `vignette("tibble")`.
 {: .callout}
 
 ## Writing data in R
