@@ -3,7 +3,7 @@ layout: lesson
 root: .
 ---
 
-This is the website for the Manchester Universties R day "Introduction to the Tidyverse Workshop".   The course material is an abridged and modified version of the [R for Data Analysis](https://uomresearchit.github.io/r-tidyverse-intro/) course that is offered by [Research IT](http://www.itservices.manchester.ac.uk/research/) at the [University of Manchester](https://www.manchester.ac.uk).
+This is the website for the Northwest Universties R day "Introduction to the Tidyverse Workshop".   The course material is an abridged and modified version of the [R for Data Analysis](https://uomresearchit.github.io/r-tidyverse-intro/) course that is offered by [Research IT](http://www.itservices.manchester.ac.uk/research/) at the [University of Manchester](https://www.manchester.ac.uk).
 
 The full day [R for Data Analysis](https://uomresearchit.github.io/r-tidyverse-intro/) course is itself an abridged and modified version of the Software Carpentry lesson [R for reproducible scientific analysis](http://swcarpentry.github.io/r-novice-gapminder).  
 
